@@ -18,7 +18,7 @@ Two skill packs exist as building blocks:
    `playwright-dotnet-scripts`, `test-data-generator`, `test-runner-bug-reporter`)
    — builds an app from requirements and QA-tests it end to end.
 
-**`SKILL-sdlc-e2e-orchestrator.md`** (in this folder) chains both packs into one flow:
+**`skills/sdlc-e2e-orchestrator/SKILL.md`** chains both packs into one flow:
 
 ```
 requirements doc
