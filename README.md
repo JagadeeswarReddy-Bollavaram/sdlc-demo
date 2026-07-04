@@ -93,7 +93,7 @@ curl -X POST http://localhost:3210/tasks/1/complete
 
 ### Install the skills (orchestrator + both packs)
 
-All 16 skills ship in this repo under `skills/`, already in Claude Code convention
+All 16 skill folders ship in this repo under `skills/`, already in Claude Code convention
 (one folder per skill, `SKILL.md` inside). Install everything flat:
 
 ```bash
@@ -123,7 +123,7 @@ sdlc-demo/
 │  │  ├─ deploy/  detect-stack/  generate-dockerfile/  generate-pipeline/
 │  │  ├─ unit-test-generator/  setup-git-hooks/  pre-push-vuln-scan/
 │  │  └─ generate-jira-userstory/
-│  └─ qa-pack/                        ← pack 2: QA automation (8 skills)
+│  └─ qa-pack/                        ← pack 2: QA automation (7 skills)
 │     ├─ qa-pipeline/  app-scaffolding/  jira-story-writer/
 │     ├─ test-case-generator/  playwright-dotnet-scripts/
 │     └─ test-data-generator/  test-runner-bug-reporter/
