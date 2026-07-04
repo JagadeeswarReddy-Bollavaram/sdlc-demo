@@ -1,0 +1,90 @@
+[
+  {
+    "id": "C1001",
+    "title": "Create task with valid title returns 201, id, status open",
+    "preconditions": "Service running",
+    "steps": ["POST /tasks with valid_task fixture", "Inspect response"],
+    "expected_result": "201; body has unique id, matching title, status 'open'",
+    "priority": "High",
+    "type": "Positive",
+    "jira_story": "PROJ-101",
+    "ac_scenario": "Create a task with a valid title"
+  },
+  {
+    "id": "C1002",
+    "title": "Create task with empty title returns 400",
+    "preconditions": "Service running",
+    "steps": ["POST /tasks with empty_title_task fixture", "Inspect response"],
+    "expected_result": "400 with validation error message",
+    "priority": "High",
+    "type": "Negative",
+    "jira_story": "PROJ-101",
+    "ac_scenario": "Reject a task with no title"
+  },
+  {
+    "id": "C1003",
+    "title": "Create task with 101-char title returns 400",
+    "preconditions": "Service running",
+    "steps": ["POST /tasks with over_limit_title_task fixture", "Inspect response"],
+    "expected_result": "400 with validation error message",
+    "priority": "Medium",
+    "type": "Boundary",
+    "jira_story": "PROJ-101",
+    "ac_scenario": "Reject a title over 100 characters"
+  },
+  {
+    "id": "C1004",
+    "title": "Create task with exactly 100-char title returns 201",
+    "preconditions": "Service running",
+    "steps": ["POST /tasks with max_length_title_task fixture", "Inspect response"],
+    "expected_result": "201; task created",
+    "priority": "Medium",
+    "type": "Boundary",
+    "jira_story": "PROJ-101",
+    "ac_scenario": "Accept a title of exactly 100 characters"
+  },
+  {
+    "id": "C1005",
+    "title": "List returns tasks newest first",
+    "preconditions": "Two tasks created in known order",
+    "steps": ["POST task A", "POST task B", "GET /tasks"],
+    "expected_result": "B appears before A in the list",
+    "priority": "High",
+    "type": "Positive",
+    "jira_story": "PROJ-102",
+    "ac_scenario": "List returns tasks newest first"
+  },
+  {
+    "id": "C1006",
+    "title": "Complete existing task returns 200 with status complete",
+    "preconditions": "A task exists",
+    "steps": ["POST /tasks with valid_task fixture", "POST /tasks/{id}/complete"],
+    "expected_result": "200; status 'complete'",
+    "priority": "High",
+    "type": "Positive",
+    "jira_story": "PROJ-103",
+    "ac_scenario": "Complete an existing task"
+  },
+  {
+    "id": "C1007",
+    "title": "Complete unknown task id returns 404",
+    "preconditions": "Id 99999 does not exist",
+    "steps": ["POST /tasks/99999/complete"],
+    "expected_result": "404 with error message",
+    "priority": "Medium",
+    "type": "Negative",
+    "jira_story": "PROJ-103",
+    "ac_scenario": "Complete an unknown task id"
+  },
+  {
+    "id": "C1008",
+    "title": "Health endpoint returns 200",
+    "preconditions": "Service running",
+    "steps": ["GET /health"],
+    "expected_result": "200 with status ok",
+    "priority": "High",
+    "type": "Positive",
+    "jira_story": "PROJ-104",
+    "ac_scenario": "Health check responds"
+  }
+]
