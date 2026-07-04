@@ -91,18 +91,19 @@ curl http://localhost:3210/tasks
 curl -X POST http://localhost:3210/tasks/1/complete
 ```
 
-### Use the orchestrator as a Claude Code skill
+### Install the skills (orchestrator + both packs)
+
+All 16 skills ship in this repo under `skills/`, already in Claude Code convention
+(one folder per skill, `SKILL.md` inside). Install everything flat:
 
 ```bash
-mkdir -p ~/.claude/skills/sdlc-e2e-orchestrator
-cp SKILL-sdlc-e2e-orchestrator.md ~/.claude/skills/sdlc-e2e-orchestrator/SKILL.md
+mkdir -p ~/.claude/skills
+cp -R skills/cicd-pack/*/ skills/qa-pack/*/ skills/sdlc-e2e-orchestrator ~/.claude/skills/
 ```
 
 Then in any Claude Code session: *"run the SDLC pipeline end to end on this
 requirements doc"*. Notes:
 
-- The stage skills it references must also be installed the same way (one folder per
-  skill, file named exactly `SKILL.md`).
 - Phase B additionally needs the org's Azure DevOps / ACR / AKS access and the
   DevOps-committed `config.yml` + `.azure/pipeline-entry.yml`. Without them, skip
   Phase B and test against a locally-run app — exactly what this demo does.
@@ -116,7 +117,16 @@ requirements doc"*. Notes:
 ```
 sdlc-demo/
 ├─ README.md                          ← this file
-├─ SKILL-sdlc-e2e-orchestrator.md     ← the orchestrator skill (install to use)
+├─ skills/                            ← all 16 skills, Claude Code convention
+│  ├─ sdlc-e2e-orchestrator/SKILL.md  ← the connector — chains both packs
+│  ├─ cicd-pack/                      ← pack 1: Azure DevOps CI/CD (8 skills)
+│  │  ├─ deploy/  detect-stack/  generate-dockerfile/  generate-pipeline/
+│  │  ├─ unit-test-generator/  setup-git-hooks/  pre-push-vuln-scan/
+│  │  └─ generate-jira-userstory/
+│  └─ qa-pack/                        ← pack 2: QA automation (8 skills)
+│     ├─ qa-pipeline/  app-scaffolding/  jira-story-writer/
+│     ├─ test-case-generator/  playwright-dotnet-scripts/
+│     └─ test-data-generator/  test-runner-bug-reporter/
 ├─ sdlc-manifest.md                   ← pipeline state/log for the demo run
 ├─ docs/
 │  └─ requirements.md                 ← pipeline input (FR-1..FR-4)
